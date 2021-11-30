@@ -6,16 +6,136 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
-<body>
+<body style="background-color: #E3F4FE; padding: 0px; margin: 0px;">
+  <!--  All three backgrounds are displayed because two are changed to display: none based on the weather in the JS file  -->
+  <img src="https://cdn.glitch.me/a417c1c4-717a-4388-86b0-1bc9e7b3f7bb%2FHot.png?v=1636412638639" class="background" id="hot"></img>
+  <img src="https://cdn.glitch.me/a417c1c4-717a-4388-86b0-1bc9e7b3f7bb%2FWind.png?v=1636412627653" class="background" id="normal"></img>
+  <img src="https://cdn.glitch.me/a417c1c4-717a-4388-86b0-1bc9e7b3f7bb%2FSnow.png?v=1636412631301" class="background" id="cold"></img>
+<!--  All JS functions called are from here  -->
   <script src="./components.js"></script>
+<!--  Hourly weather wrapper allows for all items to be vertically in the same line  -->
+  <div class="hourly-weather-wrapper">
+<!--   This actually creates the divs, but data is not filled in until getHourlyForecast() is called at bottom   -->
+    <script>
+      const displayedHours = 24;
+      for (let i = 0; i < displayedHours; i++) {
+        makeHourWeather();
+      }
+    </script>
+  </div>
+<!--  Allows two divs to be side by side  -->
+  <div class="flex-wrap">
+    <div id="weatherItems" class="day-weather-background">
+      <div class="day-weather-background-header">Weekly Forecast:</div>
+      <div class="day-weather-background-header" id="location">Boston, MA</div>
+      <div id="dailyWeathers">
+<!--    Same deal as with hourly forecast, creates divs, but data isn't filled in until geForecast() is called      -->
+        <script>
+          const displayedDays = 7;
+          for (let i = 0; i < displayedDays; i++) {
+            makeDayWeather();
+          }
+        </script>
+      </div>
+    </div>
+    <div class="flex-wrap">
+      <h1 class="displayed-weather-header">Click to test different tempurature:</h1>
+<!--  contenteditable allows user to be changed by the user      -->
+      <h1 id="displayTemp" contenteditable='true' class="displayed-weather">44</h1>
+    </div>
+<!--   Same deal as backgrounds, appropriate articles are hidden based on temperature in the JS   -->
+    <div class="outfit"> 
+      <img src="https://cdn.glitch.me/a417c1c4-717a-4388-86b0-1bc9e7b3f7bb%2FAvatar.png?v=1636412674484" class="person"></img>
+      <img src="" class="accesory" id="accesory"></img> 
+      <img src="" class="pants" id="pants"></img> 
+      <img src="" class="shorts" id="shorts"></img>
+      <img src="" class="shirt" id="shirt"></img> 
+      <img src="" class="sweater" id="sweater"></img>
+<!--       All buttons need to be placed below slideshow because imgs are fixed position, so they are above button, making them unclickable -->
+      <div class="controls">
+        <h2>
+          Change your outfit:
+        </h2>
+        <div class="flex-wrap">
+          <div class="control">
+            <button onclick="changeAccesory(-1)"><</button>
+            <h3>Accesory</h3>
+            <button onclick="changeAccesory(1)">></button>
+          </div>
+        </div>
+        <div class="flex-wrap">
+          <div class="control">
+<!--        Both here and for pants there is param so same function can be used to increment article in either direction rather than two seperate functions     -->
+<!--        Uppers changes both shirt and sweater because they will be on the same part of the body and only one is shows at a time      -->
+            <button onclick="=changeUppers(-1)"><</button>
+            <h3>Top</h3>
+            <button onclick="changeUppers(1)">></button>
+          </div>
+        </div>
+        <div class="flex-wrap">
+          <div class="control">
+<!--        lowers changes both pants and shorts because they will be on the same part of the body and only one is shows at a time      -->
+            <button onclick="changeLowers(-1)"><</button>
+            <h3>Bottoms</h3>
+            <button onclick="changeLowers(1)">></button>
+          </div>
+        </div>
+        <div class="flex-wrap">
+          <div class="random-control">
+<!--        Explanation in function in JS file      -->
+            <button onclick="randomizeOutfits()">
+              <h3>
+                Randomize Outfit
+              </h3>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script>
+      // Setting initial temperature and displaying todays weather by clicking top day element      
+      setTemp(0);
+      // Setting articles based on temp, must be done after HTML renders
+      setArticles();
+      // Setting articles based on temp, must be done after HTML renders
+      updateArticles()
+      // Setting daily and weekly temperatures, must be done after HTML renders      
+      getForecast()
+      getHourlyForecast()
+      // Event listener that checks if user changes temp and then sets the article of clothing available appropriately to whatever it is set to      
+      document.getElementById("displayTemp").addEventListener("input", function() {
+        setArticles(parseFloat(document.getElementById("displayTemp").innerHTML));
+      }, false);
+      
+      // Functionality to allow dropdown
+      var coll = document.getElementsByClassName("day-weather");
+      var i;
+      
+      // For all of the day weathers, check if item is clicked
+      for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          for (i = 0; i < coll.length; i++) {
+            // If an item is clicked, collapse all other items so only one item can be open at a time            
+            coll[i].classList.remove("active");
+            coll[i].nextElementSibling.style.maxHeight = null;
+          }
+          var arr = Array.prototype.slice.call(coll); // Now it's an Array.
+          // View the outfit for the opened day, changing temp to ttemp of clicked on day
+          setTemp(arr.indexOf(this));
+          // Setting to actgive actually opens the div
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          // Hiding and showing appropriate elements          
+          if (content.style.maxHeight){
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        });
+      }
+    </script>
 
-  <div id="weatherItems"></div>
-  <script>
-    const displayedDays = 7;
-    for (let i = 0; i < displayedDays; i++) {
-      makeDayWeather(30);
-    }
-  </script>
 </body>
 
 </html>

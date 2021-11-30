@@ -1,6 +1,203 @@
+/* background fot the day weather at the top of the screen */
+.day-weather-background {
+  width: 200px;
+  background-color: #E3F4FE;
+}
+
+/* header for the day weather */
+.day-weather-background-header {
+  font-size: 28px;
+  font-style: bold;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+/* body of the day weather */
 .day-weather {
   width: 200px;
-  height: 130px;
-  margin: 20px;
+  height: 90px;
+  background-color: #1C9CF6;
+  border: 1px solid #1D71F2;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+/* Day weather that changes color if hovered over or is clicked */
+.active,
+.day-weather:hover {
   background-color: #1D71F2;
+}
+
+/* extended part of day weather body */
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+}
+
+/* hour weather body */
+.hour-weather {
+  width: 100px;
+  height: 120px;
+  background-color: #1C9CF6;
+  border: 1px solid #1D71F2;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+/* hour weather wrapper for temp*/
+.hourly-weather-wrapper {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* hour weather time */
+.time {
+  font-size: 24px;
+  font-style: bold;
+}
+
+/* day weather image to adjust sizing and position */
+.day-image {
+  width: 40%;
+  margin-top: -20px;
+}
+
+/* hourly weather image to adjust sizing and position */
+.hourly-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  padding-top: 10px;
+}
+
+/* reusable component to allow two elements to be in the same line */
+.flex-wrap {
+  display: flex;
+}
+
+/* Everything else in this file is super intuitive, just positioning different items */
+.high-low-wrap {
+  padding-top: 15px;
+}
+
+.day-weather-wrap {
+  display: flex;
+  vertical-align: sub;
+  justify-content: space-between;
+}
+
+/* Position had to be absolute for the outfit items so that they could be overlayed */
+.outfit {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  height: 800px;
+  margin-left: 600px;
+  margin-top: 20px;
+}
+
+.person {
+  margin-top: -50px;
+  width: 340px;
+  position: absolute;
+}
+
+.accesory {
+  margin-top: -50px;
+  padding-left: 50px;
+  width: 230px;
+  position: absolute;
+}
+
+.shirt {
+  padding-top: 110px;
+  padding-left: 55px;
+  width: 230px;
+  position: absolute;
+}
+
+.sweater {
+  padding-top: 130px;
+  padding-left: 55px;
+  width: 230px;
+  position: absolute;
+}
+
+.pants {
+  padding-top: 280px;
+  padding-left: 55px;
+  width: 230px;
+  position: absolute;
+}
+
+.shorts {
+  padding-top: 250px;
+  padding-left: 55px;
+  width: 230px;
+  position: absolute;
+}
+
+.controls {
+  padding-top: 500px;
+  padding-left: 20px;
+  flex: none;
+  width: 300px;
+  text-align: center;
+}
+
+.control {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  background: LightGray;
+}
+
+.random-control {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.background {
+  position: absolute;
+  width: 1350px;
+  top: 0;
+  margin-top: 80px;
+  margin-left: 150px;
+}
+
+.displayed-weather {
+  position: absolute; 
+  margin-top: 240px;
+  margin-left: 300px;
+  animation: blinker 3s linear infinite;
+}
+
+/* Makes temp appear to be flashing so UI is straight forward that they can edit that number */
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.displayed-weather-header {
+  width: 280px;
+  position: absolute; 
+  margin-top: 200px;
+  margin-left: 100px;
 }
